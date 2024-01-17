@@ -1,1 +1,69 @@
-<p>login works!</p>
+<div class="container">
+    <div *ngIf="change === false; else elseTemplate">
+      <div class="form-group">
+        <h2>Login</h2>
+        <label for="username">Email</label>
+        <input
+          type="text"
+          id="Email"
+          name="email"
+          placeholder="Enter your email"
+          [(ngModel)]="loginObj.email"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          [(ngModel)]="loginObj.password"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <button (click)="loginForm()">Login</button>
+        <button id="buttonChange" (click)="changeButton(true)">Register</button>
+      </div>
+    </div>
+  
+    <ng-template #elseTemplate>
+      <div class="form-group">
+        <h2>Register</h2>
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="Username"
+          name="username"
+          placeholder="Enter your username"
+          [(ngModel)]="signupObj.username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="username">Email</label>
+        <input
+          type="text"
+          id="Email"
+          name="email"
+          placeholder="Enter your email"
+          [(ngModel)]="signupObj.email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          [(ngModel)]="signupObj.password"
+        />
+      </div>
+      <div class="form-group">
+        <button (click)="onSignup()">Register</button> 
+        <button id="buttonChange" (click)="changeButton(false)">Login</button>
+      </div>
+    </ng-template>
+  </div>
