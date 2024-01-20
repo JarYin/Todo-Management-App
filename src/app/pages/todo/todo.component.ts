@@ -1,26 +1,28 @@
 import { Component } from '@angular/core';
-import { TodoCardComponent } from '../../shared/components/todo-card/todo-card.component';
+import { ITodoStatus, TodoCardComponent } from '../../shared/components/todo-card/todo-card.component';
 import { TodoService } from '../../core/services/todo.service';
 import { ITodo } from '../../core/models/todo.model';
 import { NgFor } from '@angular/common';
 import { SlidePanelComponent } from '../../shared/ui/slide-panel/slide-panel.component';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [TodoCardComponent, NgFor, SlidePanelComponent],
+  imports: [TodoCardComponent, NgFor, SlidePanelComponent, ReactiveFormsModule],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.css',
 })
 export class TodoComponent {
   todoForm!: FormGroup
   todos: ITodo[] = [];
+  todoStatus = ITodoStatus;
+  isSlidePanelOpen: boolean = false;
   constructor(private todoService: TodoService, private fb: FormBuilder) {
     this.todoForm = this.fb.group({
-      title: new FormControl('',[Validators.required]),
-      description: new FormControl('',[Validators.required]),
-      status: new FormControl('OPEN',[Validators.required])
+      title: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      status: new FormControl('OPEN', [Validators.required])
     })
   }
 
@@ -31,4 +33,21 @@ export class TodoComponent {
   getAllTodos() {
     this.todos = this.todoService.getAllTodo();
   }
+
+  onCloseSlidePanel() {
+    this.isSlidePanelOpen = false;
+  }
+
+  onOpenSlidePanel() {
+    this.isSlidePanelOpen = true;
+  }
+
+  onSubmit() {
+    if (this.todoForm.valid) {
+    }
+    else {
+      this.todoForm.markAllAsTouched();
+    }
+  }
+
 }
